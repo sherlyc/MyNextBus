@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { expect } from 'chai';
+import { shallow } from 'enzyme';
+
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -10,6 +11,12 @@ it('renders without crashing', () => {
 
 describe('the environment', () => {
   it('works, hopefully', () => {
-    expect(true).to.be.true;
+    expect(true).toEqual(true);
   });
 });
+
+it('renders welcome message', () => {
+  const wrapper = shallow(<App />)
+  const welcome = <h2>Welcome to React</h2>
+  expect(wrapper.contains(welcome)).toEqual(true)
+})
