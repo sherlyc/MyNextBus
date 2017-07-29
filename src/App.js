@@ -1,11 +1,12 @@
 import React from 'react'
 import './App.css';
+import moment from 'moment'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
       this.state = {
-            arrivalTime : ""
+            timer : "",
         }
   }
 
@@ -19,9 +20,9 @@ class App extends React.Component {
       .then((data)=>{
         console.log(data)
         let dateTime= new Date(data.Services[0].ExpectedDeparture)
-        let arrivalTime = dateTime.getHours() + ':' + dateTime.getMinutes()
+        let timer = moment(dateTime).fromNow()
         this.setState({
-           arrivalTime  
+          timer
         })
       })
       .catch((error)=>{
@@ -35,7 +36,9 @@ class App extends React.Component {
   render () {
     return (
      <div>
-       {this.state.arrivalTime}
+       <p>Next bus arriving:</p>
+        {this.state.timer}
+
      </div>
     );
   }
