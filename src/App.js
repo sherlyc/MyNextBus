@@ -8,16 +8,13 @@ class App extends React.Component {
     super(props)
       this.state = {
             arrivalTimer : "",
-            timer : 20
+            timer : 60
         }
       this.fetchBusStopData = this.fetchBusStopData.bind(this)
   }
 
   fetchBusStopData() {
     console.log("called fetchBusStopData")
-    this.setState({
-      timer: 60
-    })
     const baseUrl = `https://www.metlink.org.nz/api/v1`;
     const path = `/StopDepartures/`;
     const stopNo = '5115'
@@ -31,7 +28,8 @@ class App extends React.Component {
         console.log(dateTime)
         let arrivalTimer = moment(dateTime).fromNow()
         this.setState({
-          arrivalTimer
+          arrivalTimer,
+          timer : 60
         })
       })
       .catch((error)=>{

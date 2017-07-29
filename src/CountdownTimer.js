@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css';
-import moment from 'moment'
 
 class CountdownTimer extends React.Component {
     constructor(props) {
@@ -29,7 +28,7 @@ class CountdownTimer extends React.Component {
 
     componentWillReceiveProps (nextProps) {
         this.setState({ timer : nextProps.timer})
-        this.interval = setInterval(this.tick, 2000)
+        this.interval = setInterval(this.tick, 1500)
     }
 
     componentWillUnmount () {
