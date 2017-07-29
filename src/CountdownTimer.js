@@ -12,10 +12,10 @@ class CountdownTimer extends React.Component {
     }
     tick () {
         this.setState({ timer: this.state.timer - 1})
-        console.log(this.state)           
-
+        
         if (this.state.timer <= 0) {
-            this.props.callback
+            console.log("times up")
+            this.props.callback()
             clearInterval(this.interval)
 
         }
@@ -23,8 +23,13 @@ class CountdownTimer extends React.Component {
     }
 
     componentDidMount () {
-        this.setState({ timer: this.props.timer})
-        this.interval = setInterval(this.tick, 1000)
+      // this.setState({ timer: this.props.timer})
+      // this.interval = setInterval(this.tick, 1000)
+    }
+
+    componentWillReceiveProps (nextProps) {
+        this.setState({ timer : nextProps.timer})
+        this.interval = setInterval(this.tick, 2000)
     }
 
     componentWillUnmount () {

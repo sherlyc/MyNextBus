@@ -8,14 +8,17 @@ class App extends React.Component {
     super(props)
       this.state = {
             arrivalTimer : "",
-            refresh : 'false'
+            timer : 10
         }
       this.fetchBusStopData = this.fetchBusStopData.bind(this)
+      this.nothing = this.nothing.bind(this)
   }
 
-  fetchBusStopData(){
-
+  fetchBusStopData() {
     console.log("i am called")
+    this.setState({
+      timer: 60
+    })
     const baseUrl = `https://www.metlink.org.nz/api/v1`;
     const path = `/StopDepartures/`;
     const stopNo = '5115'
@@ -37,11 +40,12 @@ class App extends React.Component {
       })
   }
 
-  
+  nothing() {
+    console.log("you called me")
+  }
 
   componentDidMount () {
-   this.fetchBusStopData();
-    
+   this.fetchBusStopData(); 
   }  
 
   render () {
@@ -49,12 +53,11 @@ class App extends React.Component {
      <div>
        <p>Next bus arriving:</p>
         {this.state.arrivalTimer}
-       <CountdownTimer timer={10} callback={this.fetchBusStopData}/>
+       <CountdownTimer timer={this.state.timer} callback={this.fetchBusStopData}/>
      </div>
     );
   }
 }
-
 
 export default App;
 
