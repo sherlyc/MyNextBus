@@ -8,14 +8,13 @@ class App extends React.Component {
     super(props)
       this.state = {
             arrivalTimer : "",
-            timer : 10
+            timer : 20
         }
       this.fetchBusStopData = this.fetchBusStopData.bind(this)
-      this.nothing = this.nothing.bind(this)
   }
 
   fetchBusStopData() {
-    console.log("i am called")
+    console.log("called fetchBusStopData")
     this.setState({
       timer: 60
     })
@@ -38,10 +37,6 @@ class App extends React.Component {
       .catch((error)=>{
           console.log(error)
       })
-  }
-
-  nothing() {
-    console.log("you called me")
   }
 
   componentDidMount () {
