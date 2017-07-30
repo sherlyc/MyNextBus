@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css';
 
-class CountdownTimer extends React.Component {
+export default class CountdownTimer extends React.Component {
     constructor(props) {
         super(props)
             this.state = {
@@ -9,41 +9,35 @@ class CountdownTimer extends React.Component {
             }
         this.tick = this.tick.bind(this)
     }
-    tick () {
+    
+    tick = () => {
         this.setState({ timer: this.state.timer - 1})
         
         if (this.state.timer <= 0) {
             console.log("times up")
             this.props.callback()
             clearInterval(this.interval)
-
         }
-
     }
 
-    componentDidMount () {
+    componentDidMount = () => {
       // this.setState({ timer: this.props.timer})
       // this.interval = setInterval(this.tick, 1000)
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentWillReceiveProps = (nextProps) => {
         this.setState({ timer : nextProps.timer})
         this.interval = setInterval(this.tick, 1500)
     }
 
-    componentWillUnmount () {
+    componentWillUnmount = () => {
         clearInterval(this.interval)
     }
 
-    render () {
-        return (
+    render = () => (
             <div>
                Refreshing after : {this.state.timer} seconds
                <button onClick = {this.props.callback}> Refresh Manually </button>
             </div>
-        )
-    }
-
+    )
 }
-
-export default CountdownTimer
