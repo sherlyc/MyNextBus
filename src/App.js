@@ -1,52 +1,74 @@
-import React from 'react'
-import './App.css';
-import moment from 'moment'
-import CountdownTimer from './CountdownTimer'
+import React, { Component } from "react";
+import {
+  Grid,
+  Navbar,
+  Jumbotron,
+  Button,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  HelpBlock
+} from "react-bootstrap";
 
-export default class App extends React.Component {
+class App extends Component {
   constructor(props) {
-    super(props)
-      this.state = {
-            arrivalTimer : "",
-            timer : 60
-        }
-      this.fetchBusStopData = this.fetchBusStopData.bind(this)
+    super(props);
+    this.state = {
+      value: ""
+    };
+  }
+  // getValidationState() {
+  //   const length = this.state.value.length;
+  //   if (length > 10) return "success";
+  //   else if (length > 5) return "warning";
+  //   else if (length > 0) return "error";
+  // }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
   }
 
-  fetchBusStopData = () => {
-    console.log("called fetchBusStopData")
-    const baseUrl = `https://www.metlink.org.nz/api/v1`;
-    const path = `/StopDepartures/`;
-    const stopNo = '5115'
-
-      fetch(`${baseUrl}${path}${stopNo}`, { mode: 'cors'})
-      .then((response) => {
-        return response.json()})
-      .then((data)=>{
-        console.log(data)
-        let dateTime= moment().format(data.Services[0].ExpectedDeparture)
-        console.log(dateTime)
-        let arrivalTimer = moment(dateTime).fromNow()
-        this.setState({
-          arrivalTimer,
-          timer : 60
-        })
-      })
-      .catch((error) => {
-          console.log(error)
-      })
+  render() {
+    return (
+      <div>
+        <Navbar inverse fixedTop>
+          <Grid>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a href="/">My Next Bus</a>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+          </Grid>
+        </Navbar>
+        <Jumbotron>
+          <Grid>
+            <h1>Find a Stop</h1>
+            <form>
+              {/* <FormGroup
+                controlId="formBasicText"
+                validationState={this.getValidationState()}
+              > */}
+              <FormGroup controlId="formBasicText">
+                <ControlLabel>Please enter a Stop Number</ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state.value}
+                  placeholder="Example: 5115"
+                  onChange={this.handleChange.bind(this)}
+                />
+                <FormControl.Feedback />
+                <HelpBlock>Please enter numbers only.</HelpBlock>
+              </FormGroup>
+              <Button bsStyle="primary" bsSize="large" block>
+                Go
+              </Button>
+            </form>
+          </Grid>
+        </Jumbotron>
+      </div>
+    );
   }
-
-  componentDidMount = () => {
-   this.fetchBusStopData(); 
-  }  
-
-  render = () => (
-     <div>
-       <p>Next bus arriving:</p>
-        {this.state.arrivalTimer}
-       <CountdownTimer timer={this.state.timer} callback={this.fetchBusStopData}/>
-     </div>
-  )
-
 }
+
+export default App;
